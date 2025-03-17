@@ -12,7 +12,7 @@
         import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
         console.log("Firebase SDK geladen!")
-        
+
         // Deine Firebase Konfiguration
         const firebaseConfig = {
             apiKey: "AIzaSyAmkOCTJXXewQl6A5Iuka3Qgm20Mcn8dhc",
@@ -38,14 +38,14 @@
         console.log("Item-Daten:", item); // Zeigt an, welche Daten geladen wurden
 
         // Prüfe, ob title und description existieren
-        let title = item.title ? item.title : "Kein Titel vorhanden";
-        let description = item.description ? item.description : "Keine Beschreibung vorhanden";
+        let Title = item.Title ? item.Title : "Kein Titel vorhanden";
+        let Description = item.Description ? item.Description : "Keine Beschreibung vorhanden";
 
         content += `<div>
-                        <h2>${title}</h2>
-                        <p>${description}</p>
-                        ${item.imageUrl ? `<img src="${item.imageUrl}" width="200">` : ''}
-                        ${item.videoUrl ? `<a href="${item.videoUrl}" target="_blank">Video ansehen</a>` : ''}
+                        <h2>${Title}</h2>
+                        <p>${Description}</p>
+                        ${item.ImageUrl ? `<img src="${item.ImageUrl}" width="200">` : ''}
+                        ${item.VideoUrl ? `<a href="${item.VideoUrl}" target="_blank">Video ansehen</a>` : ''}
                     </div>`;
     });
 
