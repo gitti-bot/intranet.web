@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Intranet Items</title>
+    <title>The Hub - Intranet</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
         import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
@@ -27,12 +30,13 @@
             let content = "";
             querySnapshot.forEach((doc) => {
                 let item = doc.data();
-                content += `<div>
-                                <h2>${item.title}</h2>
-                                <p>${item.description}</p>
-                                ${item.imageUrl ? `<img src="${item.imageUrl}" width="200">` : ''}
-                                ${item.videoUrl ? `<a href="${item.videoUrl}" target="_blank">Video ansehen</a>` : ''}
-                            </div>`;
+                content += `
+                    <div class="card">
+                        <h3>${item.title}</h3>
+                        <p>${item.description}</p>
+                        ${item.imageUrl ? `<img src="${item.imageUrl}" alt="${item.title}">` : ''}
+                        ${item.videoUrl ? `<a href="${item.videoUrl}" target="_blank" class="btn">Video ansehen</a>` : ''}
+                    </div>`;
             });
             document.getElementById("items-container").innerHTML = content;
         }
@@ -41,7 +45,18 @@
     </script>
 </head>
 <body>
-    <h1>Intranet Items</h1>
-    <div id="items-container">Lade Daten...</div>
+    <header>
+        <h1>Welcome, User!</h1>
+        <input type="text" id="search" placeholder="Search forms & templates...">
+    </header>
+
+    <section class="container">
+        <h2>Forms & Templates</h2>
+        <div id="items-container" class="grid">Lade Daten...</div>
+    </section>
+
+    <footer>
+        <p>Copyright © 2025 ORIGAMI | Contact: support@origamiconnect.com</p>
+    </footer>
 </body>
 </html>
