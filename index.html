@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Intranet Items</title>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+        import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+
+        // Deine Firebase Konfiguration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAmkOCTJXXewQl6A5Iuka3Qgm20Mcn8dhc",
+            authDomain: "intranet-71562.firebaseapp.com",
+            projectId: "intranet-71562",
+            storageBucket: "intranet-71562.firebasestorage.app",
+            messagingSenderId: "503323854669",
+            appId: "1:503323854669:web:686d866f8517351570d904"
+        };
+
+        // Firebase Initialisieren
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        async function loadItems() {
+            const querySnapshot = await getDocs(collection(db, "intranetItems"));
+            let content = "";
+            querySnapshot.forEach((doc) => {
+                let item = doc.data();
+                content += `<div>
+                                <h2>${item.title}</h2>
+                                <p>${item.description}</p>
+                                ${item.imageUrl ? `<img src="${item.imageUrl}" width="200">` : ''}
+                                ${item.videoUrl ? `<a href="${item.videoUrl}" target="_blank">Video ansehen</a>` : ''}
+                            </div>`;
+            });
+            document.getElementById("items-container").innerHTML = content;
+        }
+
+        window.onload = loadItems;
+    </script>
+</head>
+<body>
+    <h1>Intranet Items</h1>
+    <div id="items-container">Lade Daten...</div>
+</body>
+</html>
