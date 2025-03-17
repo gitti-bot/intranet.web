@@ -26,20 +26,30 @@
         const db = getFirestore(app);
 
         async function loadItems() {
-            const querySnapshot = await getDocs(collection(db, "intranetItems"));
-            let content = "";
-            querySnapshot.forEach((doc) => {
-                let item = doc.data();
-                content += `
-                    <div class="card">
-                        <h3>${item.title}</h3>
-                        <p>${item.description}</p>
-                        ${item.imageUrl ? `<img src="${item.imageUrl}" alt="${item.title}">` : ''}
-                        ${item.videoUrl ? `<a href="${item.videoUrl}" target="_blank" class="btn">Video ansehen</a>` : ''}
+    const querySnapshot = await getDocs(collection(db, "intranetItems"));
+
+    console.log("Daten aus Firestore:", querySnapshot.docs.map(doc => doc.data())); // Debug-Ausgabe
+
+    let content = "";
+    querySnapshot.forEach((doc) => {
+        let item = doc.data();
+        console.log("Item-Daten:", item); // Zeigt an, welche Daten geladen wurden
+
+        // Prüfe, ob title und description existieren
+        let title = item.title ? item.title : "Kein Titel vorhanden";
+        let description = item.description ? item.description : "Keine Beschreibung vorhanden";
+
+        content += `<div>
+                        <h2>${title}</h2>
+                        <p>${description}</p>
+                        ${item.imageUrl ? `<img src="${item.imageUrl}" width="200">` : ''}
+                        ${item.videoUrl ? `<a href="${item.videoUrl}" target="_blank">Video ansehen</a>` : ''}
                     </div>`;
-            });
-            document.getElementById("items-container").innerHTML = content;
-        }
+    });
+
+    document.getElementById("items-container").innerHTML = content;
+}
+
 
         window.onload = loadItems;
     </script>
